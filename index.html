@@ -3,159 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EOD Sales Report</title>
+    <title>Sales Report Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet"> 
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
             background-color: #f4f4f4;
+            margin: 0;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        input[type="number"], input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+
+        h1 {
+            font-family: 'Caveat', cursive; 
+            text-align: center;
+            color: #ee1e3b;
         }
-        button {
-            padding: 10px;
-            width: 100%;
-            background-color: #4CAF50;
+
+        .report-options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .report-option {
+            background-color: #ee1e3b; 
             color: white;
             border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: bold; 
+            border: 2px solid transparent; /* Default border */
         }
-        button:hover {
-            background-color: #45a049;
+
+        .report-option:hover {
+            transform: scale(1.05);
         }
-        .result {
-            background-color: #e2e2e2;
+
+        .active {
+            background-color: #ee1e3b; 
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .inactive {
+            background-color: rgba(238, 30, 59, 0.3); /* Faded grey */
+            border: 2px solid #ccc; /* Thicker border for inactive */
+            color: rgba(255, 255, 255, 0.7); /* Faded white */
+        }
+
+        .form-container {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 400px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
             padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: black; /* Black background */
+            color: white; /* White font */
+            border: none;
+            padding: 10px 15px;
             border-radius: 5px;
-            margin-top: 10px;
-            white-space: pre-wrap;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
         }
+
+        button:hover {
+            background-color: #333; /* Darker black on hover */
+        }
+
+        .result {
+            margin-top: 20px;
+            white-space: pre-wrap; 
+        }
+
         #copyButton {
-            background-color: #008CBA;
+            display: none;
             margin-top: 10px;
-        }
-        #copyButton:hover {
-            background-color: #007bb5;
         }
     </style>
 </head>
 <body>
-    <h1>EOD REPORT</h1>
-    <form id="salesForm">
-        <label for="location">Location:</label>
-        <input type="text" id="location" placeholder="ONE UTAMA 7930" required>
+    <h1>Sales Report Generator</h1>
 
-        <label for="todaySales">Today's Sales (Actual):</label>
-        <input type="number" id="todaySales" placeholder="26357.40" required>
+    <div class="report-options">
+        <button class="report-option inactive" id="eodButton">EOD Report</button>
+        <button class="report-option inactive" id="twoPMButton">2 PM Report</button>
+        <button class="report-option inactive" id="sixPMButton">6 PM Report</button>
+    </div>
 
-        <label for="lastYearSales">Last Year's Sales (LY):</label>
-        <input type="number" id="lastYearSales" placeholder="9177" required>
+    <form class="form-container" id="eodForm">
+        <label for="eodStore">Store:</label>
+        <input type="text" id="eodStore" placeholder="Enter store" required>
 
-        <label for="lastWeekSales">Last Week's Sales (LW):</label>
-        <input type="number" id="lastWeekSales" placeholder="10649" required>
+        <label for="eodTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="eodTodaySales" step="0.01" placeholder="0.00" required>
 
-        <label for="atvToday">ATV Today's Year (TY):</label>
-        <input type="number" id="atvToday" step="0.01" placeholder="131.73" required>
+        <label for="eodLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="eodLastYearSales" step="0.01" placeholder="0.00" required>
 
-        <label for="atvLastYear">ATV Last Year (LY):</label>
-        <input type="number" id="atvLastYear" step="0.01" placeholder="150.45" required>
+        <label for="eodLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="eodLastWeekSales" step="0.01" placeholder="0.00" required>
 
-        <label for="atvLastWeek">ATV Last Week (LW):</label>
-        <input type="number" id="atvLastWeek" step="0.01" placeholder="96.81" required>
+        <label for="eodAtvToday">ATV Today (RM):</label>
+        <input type="number" id="eodAtvToday" step="0.01" placeholder="0.00" required>
+
+        <label for="eodAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="eodAtvLastYear" step="0.01" placeholder="0.00" required>
+
+        <label for="eodAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="eodAtvLastWeek" step="0.01" placeholder="0.00" required>
+
+        <label for="eodMultisTY">Multis TY:</label>
+        <input type="number" id="eodMultisTY" step="0.01" placeholder="0.00" required>
+
+        <label for="eodFoundation">Foundation:</label>
+        <input type="text" id="eodFoundation" placeholder="e.g., 1:5" required>
+
+        <label for="eodPerks">Perks (%):</label>
+        <input type="number" id="eodPerks" step="0.01" placeholder="0.00" required>
+
+        <label for="eodSignUp">Sign Up:</label>
+        <input type="text" id="eodSignUp" placeholder="e.g., 1:16" required>
 
         <button type="submit">Generate Report</button>
     </form>
 
-    <div class="result" id="reportResult"></div>
-    <button id="copyButton" style="display:none;">Copy Report</button>
+    <form class="form-container" id="twoPMForm">
+        <label for="twoPMStore">Store:</label>
+        <input type="text" id="twoPMStore" placeholder="Enter store" required>
+
+        <label for="twoPMTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="twoPMTodaySales" step="0.01" placeholder="0.00" required>
+
+        <label for="twoPMLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="twoPMLastYearSales" step="0.01" placeholder="0.00" required>
+
+        <label for="twoPMLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="twoPMLastWeekSales" step="0.01" placeholder="0.00" required>
+
+        <label for="twoPMAtvToday">ATV Today (RM):</label>
+        <input type="number" id="twoPMAtvToday" step="0.01" placeholder="0.00" required>
+
+        <label for="twoPMAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="twoPMAtvLastWeek" step="0.01" placeholder="0.00" required>
+
+        <label for="twoPMAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="twoPMAtvLastYear" step="0.01" placeholder="0.00" required>
+
+        <label for="twoPMMultisTY">Multis TY:</label>
+        <input type="number" id="twoPMMultisTY" step="0.01" placeholder="0.00" required>
+
+        <button type="submit">Generate Report</button>
+    </form>
+
+    <form class="form-container" id="sixPMForm">
+        <label for="sixPMStore">Store:</label>
+        <input type="text" id="sixPMStore" placeholder="Enter store" required>
+
+        <label for="sixPMTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="sixPMTodaySales" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="sixPMLastYearSales" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="sixPMLastWeekSales" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMAtvToday">ATV Today (RM):</label>
+        <input type="number" id="sixPMAtvToday" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="sixPMAtvLastWeek" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="sixPMAtvLastYear" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMMultisTY">Multis TY:</label>
+        <input type="number" id="sixPMMultisTY" step="0.01" placeholder="0.00" required>
+
+        <button type="submit">Generate Report</button>
+    </form>
+
+    <div class="result" id="result"></div>
+    <button id="copyButton">Copy to Clipboard</button>
 
     <script>
-        // Function to format today's date as DD/MM/YYYY DAY
-        function getCurrentDate() {
-            const today = new Date();
-            const day = ("0" + today.getDate()).slice(-2);
-            const month = ("0" + (today.getMonth() + 1)).slice(-2); // Months are 0-indexed
-            const year = today.getFullYear();
-
-            // Get the day of the week
-            const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-            const dayOfWeek = daysOfWeek[today.getDay()];
-
-            return `${day}/${month}/${year} ${dayOfWeek}`;
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        document.getElementById('salesForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        function generateEodReport() {
+            const store = document.getElementById('eodStore').value;
+            const todaySales = parseFloat(document.getElementById('eodTodaySales').value);
+            const lastYearSales = parseFloat(document.getElementById('eodLastYearSales').value);
+            const lastWeekSales = parseFloat(document.getElementById('eodLastWeekSales').value);
+            const atvToday = parseFloat(document.getElementById('eodAtvToday').value);
+            const atvLastYear = parseFloat(document.getElementById('eodAtvLastYear').value);
+            const atvLastWeek = parseFloat(document.getElementById('eodAtvLastWeek').value);
+            const multisTY = parseFloat(document.getElementById('eodMultisTY').value);
+            const foundation = document.getElementById('eodFoundation').value;
+            const perks = parseFloat(document.getElementById('eodPerks').value);
+            const signUp = document.getElementById('eodSignUp').value;
 
-            // Get the input values
-            const date = getCurrentDate(); // Automatically get today's date
-            const location = document.getElementById('location').value;
-            const todaySales = parseFloat(document.getElementById('todaySales').value);
-            const lastYearSales = parseFloat(document.getElementById('lastYearSales').value);
-            const lastWeekSales = parseFloat(document.getElementById('lastWeekSales').value);
-            const atvToday = parseFloat(document.getElementById('atvToday').value);
-            const atvLastYear = parseFloat(document.getElementById('atvLastYear').value);
-            const atvLastWeek = parseFloat(document.getElementById('atvLastWeek').value);
+            const reportDate = new Date();
+            const formattedDate = `${reportDate.getMonth() + 1}/${reportDate.getDate()}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
 
-            // Calculate differences and percentages
-            const diffLastYear = todaySales - lastYearSales;
-            const diffLastWeek = todaySales - lastWeekSales;
-            const percentLastYear = ((diffLastYear / lastYearSales) * 100).toFixed(0);
-            const percentLastWeek = ((diffLastWeek / lastWeekSales) * 100).toFixed(0);
+            const result = `
+EOD REPORT
+${formattedDate} 
+${store}
 
-            // Generate the report in the requested format
-            let report = `EOD REPORT\n`;
-            report += `${date}\n${location}\n\n`;
-            report += `Actual: RM ${todaySales.toLocaleString(undefined, {minimumFractionDigits: 2})}\n`;
-            report += `LY: RM ${lastYearSales.toLocaleString()} (${percentLastYear}%)\n`;
-            report += `LW: RM ${lastWeekSales.toLocaleString()} (${percentLastWeek}%)\n`;
-            report += `\nATV TY: RM ${atvToday.toFixed(2)}\n`;
-            report += `ATV LY: RM ${atvLastYear.toFixed(2)}\n`;
-            report += `ATV LW: RM ${atvLastWeek.toFixed(2)}\n`;
+Actual: RM ${formatNumber(todaySales.toFixed(2))}
+LY: RM ${formatNumber(lastYearSales.toFixed(2))} (${((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2)}%)
+LW: RM ${formatNumber(lastWeekSales.toFixed(2))} (${((todaySales - lastWeekSales) / lastWeekSales * 100).toFixed(2)}%)
+ATV TY: RM ${formatNumber(atvToday.toFixed(2))}
+ATV LY: RM ${formatNumber(atvLastYear.toFixed(2))}
+ATV LW: RM ${formatNumber(atvLastWeek.toFixed(2))}
 
-            // Display the report
-            document.getElementById('reportResult').innerText = report;
-
-            // Show the copy button
+Multis TY: ${multisTY.toFixed(2)}
+Foundation: ${foundation}
+Perks: ${perks.toFixed(2)}%
+Sign up: ${signUp}
+            `;
+            document.getElementById('result').textContent = result;
             document.getElementById('copyButton').style.display = 'block';
-        });
+        }
 
-        // Copy the report to clipboard when the copy button is clicked
-        document.getElementById('copyButton').addEventListener('click', function() {
-            const report = document.getElementById('reportResult').innerText;
-            
-            // Create a temporary textarea element to hold the report text
-            const tempTextarea = document.createElement('textarea');
-            tempTextarea.value = report;
-            document.body.appendChild(tempTextarea);
-            
-            // Select and copy the text
-            tempTextarea.select();
-            document.execCommand('copy');
-            
-            // Remove the temporary element
-            document.body.removeChild(tempTextarea);
-            
-            // Notify the user
-            alert('Report copied to clipboard!');
-        });
+        function generateTwoPMReport() {
+            const store = document.getElementById('twoPMStore').value;
+            const todaySales = parseFloat(document.getElementById('twoPMTodaySales').value);
+            const lastYearSales = parseFloat(document.getElementById('twoPMLastYearSales').value);
+            const lastWeekSales = parseFloat(document.getElementById('twoPMLastWeekSales').value);
+            const atvToday = parseFloat(document.getElementById('twoPMAtvToday').value);
+            const atvLastYear = parseFloat(document.getElementById('twoPMAtvLastYear').value);
+            const atvLastWeek = parseFloat(document.getElementById('twoPMAtvLastWeek').value);
+            const multisTY = parseFloat(document.getElementById('twoPMMultisTY').value);
+
+            const reportDate = new Date();
+            const formattedDate = `${reportDate.getMonth() + 1}/${reportDate.getDate()}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
+
+            const result = `
+${store}
+2PM REPORT
+${formattedDate}
+
+2PM TY : RM ${formatNumber(todaySales.toFixed(2))}
+2PM LW : RM ${formatNumber(lastWeekSales.toFixed(2))}
+2PM LY : RM ${formatNumber(lastYearSales.toFixed(2))} (${((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2)}%)
+TY ATV : RM ${formatNumber(atvToday.toFixed(2))}
+LY ATV : RM ${formatNumber(atvLastYear.toFixed(2))}
+LW ATV : RM ${formatNumber(atvLastWeek.toFixed(2))}
+TY MULTIS : ${multisTY.toFixed(2)}
+            `;
+            document.getElementById('result').textContent = result;
+            document.getElementById('copyButton').style.display = 'block';
+        }
+
+        function generateSixPMReport() {
+            const store = document.getElementById('sixPMStore').value;
+            const todaySales = parseFloat(document.getElementById('sixPMTodaySales').value);
+            const lastYearSales = parseFloat(document.getElementById('sixPMLastYearSales').value);
+            const lastWeekSales = parseFloat(document.getElementById('sixPMLastWeekSales').value);
+            const atvToday = parseFloat(document.getElementById('sixPMAtvToday').value);
+            const atvLastYear = parseFloat(document.getElementById('sixPMAtvLastYear').value);
+            const atvLastWeek = parseFloat(document.getElementById('sixPMAtvLastWeek').value);
+            const multisTY = parseFloat(document.getElementById('sixPMMultisTY').value);
+
+            const reportDate = new Date();
+            const formattedDate = `${reportDate.getMonth() + 1}/${reportDate.getDate()}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
+
+            const result = `
+${store}
+6PM REPORT
+${formattedDate}
+
+6PM TY : RM ${formatNumber(todaySales.toFixed(2))}
+6PM LW : RM ${formatNumber(lastWeekSales.toFixed(2))}
+6PM LY : RM ${formatNumber(lastYearSales.toFixed(2))} (${((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2)}%)
+TY ATV : RM ${formatNumber(atvToday.toFixed(2))}
+LY ATV : RM ${formatNumber(atvLastYear.toFixed(2))}
+LW ATV : RM ${formatNumber(atvLastWeek.toFixed(2))}
+TY MULTIS : ${multisTY.toFixed(2)}
+            `;
+            document.getElementById('result').textContent = result;
+            document.getElementById('copyButton').style.display = 'block';
+        }
+
+        document.getElementById('eodButton').onclick = function() {
+            document.querySelectorAll('.form-container').forEach(form => form.style.display = 'none');
+            document.getElementById('eodForm').style.display = 'block';
+            document.querySelectorAll('.report-option').forEach(btn => {
+                btn.classList.remove('active', 'inactive');
+                btn.classList.add('inactive'); // Reset all to inactive
+            });
+            this.classList.add('active');
+        };
+
+        document.getElementById('twoPMButton').onclick = function() {
+            document.querySelectorAll('.form-container').forEach(form => form.style.display = 'none');
+            document.getElementById('twoPMForm').style.display = 'block';
+            document.querySelectorAll('.report-option').forEach(btn => {
+                btn.classList.remove('active', 'inactive');
+                btn.classList.add('inactive'); // Reset all to inactive
+            });
+            this.classList.add('active');
+        };
+
+        document.getElementById('sixPMButton').onclick = function() {
+            document.querySelectorAll('.form-container').forEach(form => form.style.display = 'none');
+            document.getElementById('sixPMForm').style.display = 'block';
+            document.querySelectorAll('.report-option').forEach(btn => {
+                btn.classList.remove('active', 'inactive');
+                btn.classList.add('inactive'); // Reset all to inactive
+            });
+            this.classList.add('active');
+        };
+
+        document.getElementById('eodForm').onsubmit = function(event) {
+            event.preventDefault();
+            generateEodReport();
+        };
+
+        document.getElementById('twoPMForm').onsubmit = function(event) {
+            event.preventDefault();
+            generateTwoPMReport();
+        };
+
+        document.getElementById('sixPMForm').onsubmit = function(event) {
+            event.preventDefault();
+            generateSixPMReport();
+        };
+
+        document.getElementById('copyButton').onclick = function() {
+            const resultText = document.getElementById('result').textContent;
+            navigator.clipboard.writeText(resultText)
+                .then(() => alert('Report copied to clipboard!'))
+                .catch(err => console.error('Error copying text: ', err));
+        };
     </script>
 </body>
 </html>
