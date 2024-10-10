@@ -253,64 +253,71 @@ Sign up: ${signUp}
         }
 
         function generateTwoPMReport() {
-            const store = document.getElementById('twoPMStore').value;
-            const todaySales = parseFloat(document.getElementById('twoPMTodaySales').value);
-            const lastYearSales = parseFloat(document.getElementById('twoPMLastYearSales').value);
-            const lastWeekSales = parseFloat(document.getElementById('twoPMLastWeekSales').value);
-            const atvToday = parseFloat(document.getElementById('twoPMAtvToday').value);
-            const atvLastYear = parseFloat(document.getElementById('twoPMAtvLastYear').value);
-            const atvLastWeek = parseFloat(document.getElementById('twoPMAtvLastWeek').value);
-            const multisTY = parseFloat(document.getElementById('twoPMMultisTY').value);
+    const store = document.getElementById('twoPMStore').value;
+    const todaySales = parseFloat(document.getElementById('twoPMTodaySales').value);
+    const lastYearSales = parseFloat(document.getElementById('twoPMLastYearSales').value);
+    const lastWeekSales = parseFloat(document.getElementById('twoPMLastWeekSales').value);
+    const atvToday = parseFloat(document.getElementById('twoPMAtvToday').value);
+    const atvLastYear = parseFloat(document.getElementById('twoPMAtvLastYear').value);
+    const atvLastWeek = parseFloat(document.getElementById('twoPMAtvLastWeek').value);
+    const multisTY = parseFloat(document.getElementById('twoPMMultisTY').value);
 
-            const reportDate = new Date();
-            const formattedDate = `${reportDate.getMonth() + 1}/${reportDate.getDate()}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
+    const reportDate = new Date();
+    const formattedDate = `${reportDate.getMonth() + 1}/${reportDate.getDate()}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
 
-            const result = `
+    const lyPercentage = ((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2);
+    const lwPercentage = ((todaySales - lastWeekSales) / lastWeekSales * 100).toFixed(2);
+
+    const result = `
 ${store}
 2PM REPORT
 ${formattedDate}
 
 2PM TY : RM ${formatNumber(todaySales.toFixed(2))}
-2PM LW : RM ${formatNumber(lastWeekSales.toFixed(2))}
-2PM LY : RM ${formatNumber(lastYearSales.toFixed(2))} (${((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2)}%)
+2PM LW : RM ${formatNumber(lastWeekSales.toFixed(2))} (${lwPercentage}%)
+2PM LY : RM ${formatNumber(lastYearSales.toFixed(2))} (${lyPercentage}%)
 TY ATV : RM ${formatNumber(atvToday.toFixed(2))}
 LY ATV : RM ${formatNumber(atvLastYear.toFixed(2))}
 LW ATV : RM ${formatNumber(atvLastWeek.toFixed(2))}
 TY MULTIS : ${multisTY.toFixed(2)}
-            `;
-            document.getElementById('result').textContent = result;
-            document.getElementById('copyButton').style.display = 'block';
-        }
+    `;
+    document.getElementById('result').textContent = result;
+    document.getElementById('copyButton').style.display = 'block';
+}
 
-        function generateSixPMReport() {
-            const store = document.getElementById('sixPMStore').value;
-            const todaySales = parseFloat(document.getElementById('sixPMTodaySales').value);
-            const lastYearSales = parseFloat(document.getElementById('sixPMLastYearSales').value);
-            const lastWeekSales = parseFloat(document.getElementById('sixPMLastWeekSales').value);
-            const atvToday = parseFloat(document.getElementById('sixPMAtvToday').value);
-            const atvLastYear = parseFloat(document.getElementById('sixPMAtvLastYear').value);
-            const atvLastWeek = parseFloat(document.getElementById('sixPMAtvLastWeek').value);
-            const multisTY = parseFloat(document.getElementById('sixPMMultisTY').value);
+function generateSixPMReport() {
+    const store = document.getElementById('sixPMStore').value;
+    const todaySales = parseFloat(document.getElementById('sixPMTodaySales').value);
+    const lastYearSales = parseFloat(document.getElementById('sixPMLastYearSales').value);
+    const lastWeekSales = parseFloat(document.getElementById('sixPMLastWeekSales').value);
+    const atvToday = parseFloat(document.getElementById('sixPMAtvToday').value);
+    const atvLastYear = parseFloat(document.getElementById('sixPMAtvLastYear').value);
+    const atvLastWeek = parseFloat(document.getElementById('sixPMAtvLastWeek').value);
+    const multisTY = parseFloat(document.getElementById('sixPMMultisTY').value);
 
-            const reportDate = new Date();
-            const formattedDate = `${reportDate.getMonth() + 1}/${reportDate.getDate()}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
+    const reportDate = new Date();
+    const formattedDate = `${reportDate.getMonth() + 1}/${reportDate.getDate()}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
 
-            const result = `
+    const lyPercentage = ((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2);
+    const lwPercentage = ((todaySales - lastWeekSales) / lastWeekSales * 100).toFixed(2);
+
+    const result = `
 ${store}
 6PM REPORT
 ${formattedDate}
 
 6PM TY : RM ${formatNumber(todaySales.toFixed(2))}
-6PM LW : RM ${formatNumber(lastWeekSales.toFixed(2))}
-6PM LY : RM ${formatNumber(lastYearSales.toFixed(2))} (${((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2)}%)
+6PM LW : RM ${formatNumber(lastWeekSales.toFixed(2))} (${lwPercentage}%)
+6PM LY : RM ${formatNumber(lastYearSales.toFixed(2))} (${lyPercentage}%)
 TY ATV : RM ${formatNumber(atvToday.toFixed(2))}
 LY ATV : RM ${formatNumber(atvLastYear.toFixed(2))}
 LW ATV : RM ${formatNumber(atvLastWeek.toFixed(2))}
 TY MULTIS : ${multisTY.toFixed(2)}
-            `;
-            document.getElementById('result').textContent = result;
-            document.getElementById('copyButton').style.display = 'block';
-        }
+    `;
+    document.getElementById('result').textContent = result;
+    document.getElementById('copyButton').style.display = 'block';
+}
+
 
         document.getElementById('eodButton').onclick = function() {
             document.querySelectorAll('.form-container').forEach(form => form.style.display = 'none');
