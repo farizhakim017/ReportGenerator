@@ -3,160 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EOD Sales Report</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            background-color: #f4f4f4;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        input[type="number"], input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            padding: 10px;
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            background-color: #e2e2e2;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            white-space: pre-wrap;
-        }
-        #copyButton {
-            background-color: #008CBA;
-            margin-top: 10px;
-        }
-        #copyButton:hover {
-            background-color: #007bb5;
-        }
-    </style>
+    <title>Sales Report Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet"> 
 </head>
 <link rel="stylesheet" href="index.css">
 <body>
-    <h1>EOD REPORT</h1>
-    <form id="salesForm">
-        <label for="location">Location:</label>
-        <input type="text" id="location" placeholder="ONE UTAMA 7930" required>
+    <h1>Sales Report Generator</h1>
 
-        <label for="todaySales">Today's Sales (Actual):</label>
-        <input type="number" id="todaySales" placeholder="26357.40" required>
+    <div class="report-options">
+        <button class="report-option inactive" id="eodButton">EOD Report</button>
+        <button class="report-option inactive" id="twoPMButton">2 PM Report</button>
+        <button class="report-option inactive" id="sixPMButton">6 PM Report</button>
+    </div>
 
-        <label for="lastYearSales">Last Year's Sales (LY):</label>
-        <input type="number" id="lastYearSales" placeholder="9177" required>
+    <form class="form-container" id="eodForm">
+        <div class="custom-dropdown">
+            <label for="eodStore">Store:</label>
+            <input type="text" id="eodStore" placeholder="Enter store" required>
+            <ul id="storeDropdown" class="dropdown-menu">
+                <li>ONE UTAMA 7930</li>
+                <li>MID VALLEY 7963</li>
+                <li>SUNWAY 7979</li>
+                <li>PAVILION 7111</li>
+            </ul>
+        </div>
 
-        <label for="lastWeekSales">Last Week's Sales (LW):</label>
-        <input type="number" id="lastWeekSales" placeholder="10649" required>
+        <label for="eodTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="eodTodaySales" step="0.01" placeholder="0.00" required>
 
-        <label for="atvToday">ATV Today's Year (TY):</label>
-        <input type="number" id="atvToday" step="0.01" placeholder="131.73" required>
+        <label for="eodLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="eodLastYearSales" step="0.01" placeholder="0.00" required>
 
-        <label for="atvLastYear">ATV Last Year (LY):</label>
-        <input type="number" id="atvLastYear" step="0.01" placeholder="150.45" required>
+        <label for="eodLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="eodLastWeekSales" step="0.01" placeholder="0.00" required>
 
-        <label for="atvLastWeek">ATV Last Week (LW):</label>
-        <input type="number" id="atvLastWeek" step="0.01" placeholder="96.81" required>
+        <label for="eodAtvToday">ATV Today (RM):</label>
+        <input type="number" id="eodAtvToday" step="0.01" placeholder="0.00" required>
+
+        <label for="eodAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="eodAtvLastYear" step="0.01" placeholder="0.00" required>
+
+        <label for="eodAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="eodAtvLastWeek" step="0.01" placeholder="0.00" required>
+
+        <label for="eodMultisTY">Multis TY:</label>
+        <input type="number" id="eodMultisTY" step="0.01" placeholder="0.00" required>
+
+        <label for="eodFoundation">Foundation:</label>
+        <input type="text" id="eodFoundation" placeholder="e.g., 1:5" required>
+
+        <label for="eodPerks">Perks (%):</label>
+        <input type="number" id="eodPerks" step="0.01" placeholder="0.00" required>
+
+        <label for="eodSignUp">Sign Up:</label>
+        <input type="text" id="eodSignUp" placeholder="e.g., 1:16" required>
 
         <button type="submit">Generate Report</button>
     </form>
 
-    <div class="result" id="reportResult"></div>
-    <button id="copyButton" style="display:none;">Copy Report</button>
+    <form class="form-container" id="twoPMForm">
+        <div class="custom-dropdown">
+            <label for="twoPMStore">Store:</label>
+            <input type="text" id="twoPMStore" placeholder="Enter store" required>
+            <ul id="twoPMStoreDropdown" class="dropdown-menu">
+                <li>ONE UTAMA 7930</li>
+                <li>MID VALLEY 7963</li>
+                <li>SUNWAY 7979</li>
+                <li>PAVILION 7111</li>
+            </ul>
+        </div>
+        
 
-    <script>
-        // Function to format today's date as DD/MM/YYYY DAY
-        function getCurrentDate() {
-            const today = new Date();
-            const day = ("0" + today.getDate()).slice(-2);
-            const month = ("0" + (today.getMonth() + 1)).slice(-2); // Months are 0-indexed
-            const year = today.getFullYear();
+        <label for="twoPMTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="twoPMTodaySales" step="0.01" placeholder="0.00" required>
 
-            // Get the day of the week
-            const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-            const dayOfWeek = daysOfWeek[today.getDay()];
+        <label for="twoPMLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="twoPMLastYearSales" step="0.01" placeholder="0.00" required>
 
-            return `${day}/${month}/${year} ${dayOfWeek}`;
-        }
+        <label for="twoPMLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="twoPMLastWeekSales" step="0.01" placeholder="0.00" required>
 
-        document.getElementById('salesForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        <label for="twoPMAtvToday">ATV Today (RM):</label>
+        <input type="number" id="twoPMAtvToday" step="0.01" placeholder="0.00" required>
 
-            // Get the input values
-            const date = getCurrentDate(); // Automatically get today's date
-            const location = document.getElementById('location').value;
-            const todaySales = parseFloat(document.getElementById('todaySales').value);
-            const lastYearSales = parseFloat(document.getElementById('lastYearSales').value);
-            const lastWeekSales = parseFloat(document.getElementById('lastWeekSales').value);
-            const atvToday = parseFloat(document.getElementById('atvToday').value);
-            const atvLastYear = parseFloat(document.getElementById('atvLastYear').value);
-            const atvLastWeek = parseFloat(document.getElementById('atvLastWeek').value);
+        <label for="twoPMAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="twoPMAtvLastWeek" step="0.01" placeholder="0.00" required>
 
-            // Calculate differences and percentages
-            const diffLastYear = todaySales - lastYearSales;
-            const diffLastWeek = todaySales - lastWeekSales;
-            const percentLastYear = ((diffLastYear / lastYearSales) * 100).toFixed(0);
-            const percentLastWeek = ((diffLastWeek / lastWeekSales) * 100).toFixed(0);
+        <label for="twoPMAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="twoPMAtvLastYear" step="0.01" placeholder="0.00" required>
 
-            // Generate the report in the requested format
-            let report = `EOD REPORT\n`;
-            report += `${date}\n${location}\n\n`;
-            report += `Actual: RM ${todaySales.toLocaleString(undefined, {minimumFractionDigits: 2})}\n`;
-            report += `LY: RM ${lastYearSales.toLocaleString()} (${percentLastYear}%)\n`;
-            report += `LW: RM ${lastWeekSales.toLocaleString()} (${percentLastWeek}%)\n`;
-            report += `\nATV TY: RM ${atvToday.toFixed(2)}\n`;
-            report += `ATV LY: RM ${atvLastYear.toFixed(2)}\n`;
-            report += `ATV LW: RM ${atvLastWeek.toFixed(2)}\n`;
+        <label for="twoPMMultisTY">Multis TY:</label>
+        <input type="number" id="twoPMMultisTY" step="0.01" placeholder="0.00" required>
 
-            // Display the report
-            document.getElementById('reportResult').innerText = report;
+        <button type="submit">Generate Report</button>
+    </form>
 
-            // Show the copy button
-            document.getElementById('copyButton').style.display = 'block';
-        });
+    <form class="form-container" id="sixPMForm">
+        <div class="custom-dropdown">
+            <label for="sixPMStore">Store:</label>
+            <input type="text" id="sixPMStore" placeholder="Enter store" required>
+            <ul id="sixPMStoreDropdown" class="dropdown-menu">
+                <li>ONE UTAMA 7930</li>
+                <li>MID VALLEY 7963</li>
+                <li>SUNWAY 7979</li>
+                <li>PAVILION 7111</li>
+            </ul>
+        </div>
 
-        // Copy the report to clipboard when the copy button is clicked
-        document.getElementById('copyButton').addEventListener('click', function() {
-            const report = document.getElementById('reportResult').innerText;
-            
-            // Create a temporary textarea element to hold the report text
-            const tempTextarea = document.createElement('textarea');
-            tempTextarea.value = report;
-            document.body.appendChild(tempTextarea);
-            
-            // Select and copy the text
-            tempTextarea.select();
-            document.execCommand('copy');
-            
-            // Remove the temporary element
-            document.body.removeChild(tempTextarea);
-            
-            // Notify the user
-            alert('Report copied to clipboard!');
-        });
-    </script>
+        <label for="sixPMTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="sixPMTodaySales" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="sixPMLastYearSales" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="sixPMLastWeekSales" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMAtvToday">ATV Today (RM):</label>
+        <input type="number" id="sixPMAtvToday" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="sixPMAtvLastWeek" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="sixPMAtvLastYear" step="0.01" placeholder="0.00" required>
+
+        <label for="sixPMMultisTY">Multis TY:</label>
+        <input type="number" id="sixPMMultisTY" step="0.01" placeholder="0.00" required>
+
+        <button type="submit">Generate Report</button>
+    </form>
+
+    <div class="result" id="result"></div>
+    <button id="copyButton">Copy to Clipboard</button>
+
+    <script src="index.js" type="module"></script>
 </body>
 </html>
