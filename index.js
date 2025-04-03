@@ -6,30 +6,41 @@ function formatPercentage(value) {
     return value + "%";
 }
 
-// Convert numbers to ratios (e.g., 12 -> 1:12)
 function formatRatio(value) {
-    return value >= 1 ? `1:${value}` : value.toString();
+    // If the value already has a colon (e.g., "1:5"), return it as is
+    if (typeof value === "string" && value.includes(":")) {
+        return value.trim(); // Ensure there is no extra space
+    }
+
+    // Otherwise, assume it's just a number and format it to "1:x"
+    let num = parseFloat(value);
+    if (isNaN(num) || num <= 0) {
+        return "Invalid"; // Handle non-numeric or invalid cases
+    }
+
+    return `1:${num}`;
 }
+
+
 
 function generateReport(type) {
     let storeInput = document.getElementById(`${type}Store`);
     if (!storeInput) {
         console.error(`Error: ${type} store input field not found.`);
-        return; // Exit function if store input is not found
+        return;
     }
 
-    let store = storeInput.value.trim();
+    let store = storeInput.value.trim().toUpperCase();
     if (store === "") {
         alert("Please enter or select a store.");
         return;
     }
 
-    // Ensure all required inputs exist before accessing them
     function getValue(id) {
         let element = document.getElementById(id);
         if (!element) {
             console.error(`Error: ${id} not found.`);
-            return 0; // Return default value if input is missing
+            return 0;
         }
         return parseFloat(element.value) || 0;
     }
@@ -41,65 +52,63 @@ function generateReport(type) {
     let atvLastYear = getValue(`${type}AtvLastYear`);
     let atvLastWeek = getValue(`${type}AtvLastWeek`);
     let multisTY = getValue(`${type}MultisTY`);
-    let foundationInput = document.getElementById(`${type}Foundation`);
-    let perksInput = document.getElementById(`${type}Perks`);
-    let signUpInput = document.getElementById(`${type}SignUp`);
+    let foundation = getValue(`${type}Foundation`);
+    let perks = getValue(`${type}Perks`);
+    let signUp = getValue(`${type}SignUp`);
 
-    let foundation = foundationInput ? formatRatio(parseFloat(foundationInput.value) || 0) : "N/A";
-    let perks = perksInput ? formatPercentage(parseFloat(perksInput.value) || 0) : "N/A";
-    let signUp = signUpInput ? formatRatio(parseFloat(signUpInput.value) || 0) : "N/A";
+    let lyPercentage = lastYearSales !== 0 ? (((todaySales - lastYearSales) / lastYearSales) * 100).toFixed(2) : "N/A";
+    let lwPercentage = lastWeekSales !== 0 ? (((todaySales - lastWeekSales) / lastWeekSales) * 100).toFixed(2) : "N/A";
 
-    let reportDate = new Date();
-    let formattedDate = `${reportDate.getDate()}/${reportDate.getMonth() + 1}/${reportDate.getFullYear()} ${reportDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase()}`;
+    let lyDiff = lastYearSales !== 0 ? `(${lyPercentage}%)` : "N/A";
+    let lwDiff = lastWeekSales !== 0 ? `(${lwPercentage}%)` : "N/A";
 
-    let lyPercentage = lastYearSales !== 0 ? ((todaySales - lastYearSales) / lastYearSales * 100).toFixed(2) : "N/A";
-    let lwPercentage = lastWeekSales !== 0 ? ((todaySales - lastWeekSales) / lastWeekSales * 100).toFixed(2) : "N/A";
+    let formattedFoundation = formatRatio(foundation);
+    let formattedSignUp = formatRatio(signUp);
+    let formattedPerks = formatPercentage(perks);
 
-    let result = "";
-
+    let report = "";
+    
     if (type === "eod") {
-        result = `
+        report = `
 EOD REPORT
-${formattedDate}
+${new Date().toLocaleDateString('en-GB')} ${new Date().toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase()}
 ${store}
 
-Actual: RM ${formatNumber(todaySales.toFixed(2))}
-LY: RM ${formatNumber(lastYearSales.toFixed(2))} (${lyPercentage}%)
-LW: RM ${formatNumber(lastWeekSales.toFixed(2))} (${lwPercentage}%)
-ATV TY: RM ${formatNumber(atvToday.toFixed(2))}
-ATV LY: RM ${formatNumber(atvLastYear.toFixed(2))}
-ATV LW: RM ${formatNumber(atvLastWeek.toFixed(2))}
+Actual: RM ${formatNumber(todaySales)}
+LY: RM ${formatNumber(lastYearSales)} ${lyDiff}
+LW: RM ${formatNumber(lastWeekSales)} ${lwDiff}
+ATV TY: RM ${formatNumber(atvToday)}
+ATV LY: RM ${formatNumber(atvLastYear)}
+ATV LW: RM ${formatNumber(atvLastWeek)}
 
-Multis TY: ${multisTY.toFixed(2)}
-Foundation: ${foundation}
-Perks: ${perks}
-Sign up: ${signUp}
+Multis : ${multisTY}
+Foundation: ${formattedFoundation}
+Perks: ${formattedPerks}
+Sign up: ${formattedSignUp}
         `;
     } else {
-        let typeUpper = type.toUpperCase();
-        let lyDiff = lastYearSales !== 0 ? ((todaySales - lastYearSales) / lastYearSales * 100).toFixed(0) : "N/A";
-        let lwDiff = lastWeekSales !== 0 ? ((todaySales - lastWeekSales) / lastWeekSales * 100).toFixed(0) : "N/A";
-
-        result = `
+        report = `
 ${store}
-${typeUpper} TY : RM ${formatNumber(todaySales.toFixed(2))}
-${typeUpper} LW : RM ${formatNumber(lastWeekSales.toFixed(2))} (${lwDiff}%)
-${typeUpper} LY : RM ${formatNumber(lastYearSales.toFixed(2))} (${lyDiff}%)
-TY ATV : RM ${formatNumber(atvToday.toFixed(2))}
-LW ATV : RM ${formatNumber(atvLastWeek.toFixed(2))}
-LY ATV : RM ${formatNumber(atvLastYear.toFixed(2))}
-TY MULTIS : ${multisTY.toFixed(2)}
+${type.toUpperCase()} TY : RM ${formatNumber(todaySales)}
+${type.toUpperCase()} LW : RM ${formatNumber(lastWeekSales)} ${lwDiff}
+${type.toUpperCase()} LY : RM ${formatNumber(lastYearSales)} ${lyDiff}
+TY ATV : RM ${formatNumber(atvToday)}
+LW ATV : RM ${formatNumber(atvLastWeek)}
+LY ATV : RM ${formatNumber(atvLastYear)}
+Multis : ${multisTY}
         `;
     }
 
-    document.getElementById('result').textContent = result;
+    document.getElementById('result').textContent = report;
     document.getElementById('copyButton').style.display = 'block';
 }
 
 
+
+
 // 🔹 Attach event listeners to forms dynamically
 document.addEventListener("DOMContentLoaded", function () {
-    ["eod", "twoPM", "sixPM"].forEach(type => {
+    ["eod", "2PM", "6PM"].forEach(type => {
         let form = document.getElementById(`${type}Form`);
         if (form) {
             form.onsubmit = function (event) {
@@ -111,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // 🔹 Toggle forms when buttons are clicked
-["eod", "twoPM", "sixPM"].forEach(type => {
+["eod", "2PM", "6PM"].forEach(type => {
     let button = document.getElementById(`${type}Button`);
     if (button) {
         button.onclick = function () {
@@ -212,6 +221,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     setupDropdown("eodStore", "storeDropdown");
-    setupDropdown("twoPMStore", "twoPMStoreDropdown");
-    setupDropdown("sixPMStore", "sixPMStoreDropdown");
+    setupDropdown("2PMStore", "2PMStoreDropdown");
+    setupDropdown("6PMStore", "6PMStoreDropdown");
 });

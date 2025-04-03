@@ -12,8 +12,8 @@
 
     <div class="report-options">
         <button class="report-option inactive" id="eodButton">EOD Report</button>
-        <button class="report-option inactive" id="twoPMButton">2 PM Report</button>
-        <button class="report-option inactive" id="sixPMButton">6 PM Report</button>
+        <button class="report-option inactive" id="2PMButton">2 PM Report</button>
+        <button class="report-option inactive" id="6PMButton">6 PM Report</button>
     </div>
 
     <form class="form-container" id="eodForm">
@@ -61,11 +61,11 @@
         <button type="submit">Generate Report</button>
     </form>
 
-    <form class="form-container" id="twoPMForm">
+    <form class="form-container" id="2PMForm">
         <div class="custom-dropdown">
-            <label for="twoPMStore">Store:</label>
-            <input type="text" id="twoPMStore" placeholder="Enter store" required>
-            <ul id="twoPMStoreDropdown" class="dropdown-menu">
+            <label for="2PMStore">Store:</label>
+            <input type="text" id="2PMStore" placeholder="Enter store" required>
+            <ul id="2PMStoreDropdown" class="dropdown-menu">
                 <li>ONE UTAMA 7930</li>
                 <li>MID VALLEY 7963</li>
                 <li>SUNWAY 7979</li>
@@ -74,35 +74,35 @@
         </div>
         
 
-        <label for="twoPMTodaySales">Today's Sales (RM):</label>
-        <input type="number" id="twoPMTodaySales" step="0.01" placeholder="0.00" required>
+        <label for="2PMTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="2PMTodaySales" step="0.01" placeholder="0.00" required>
 
-        <label for="twoPMLastYearSales">Last Year Sales (RM):</label>
-        <input type="number" id="twoPMLastYearSales" step="0.01" placeholder="0.00" required>
+        <label for="2PMLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="2PMLastYearSales" step="0.01" placeholder="0.00" required>
 
-        <label for="twoPMLastWeekSales">Last Week Sales (RM):</label>
-        <input type="number" id="twoPMLastWeekSales" step="0.01" placeholder="0.00" required>
+        <label for="2PMLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="2PMLastWeekSales" step="0.01" placeholder="0.00" required>
 
-        <label for="twoPMAtvToday">ATV Today (RM):</label>
-        <input type="number" id="twoPMAtvToday" step="0.01" placeholder="0.00" required>
+        <label for="2PMAtvToday">ATV Today (RM):</label>
+        <input type="number" id="2PMAtvToday" step="0.01" placeholder="0.00" required>
 
-        <label for="twoPMAtvLastWeek">ATV Last Week (RM):</label>
-        <input type="number" id="twoPMAtvLastWeek" step="0.01" placeholder="0.00" required>
+        <label for="2PMAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="2PMAtvLastWeek" step="0.01" placeholder="0.00" required>
 
-        <label for="twoPMAtvLastYear">ATV Last Year (RM):</label>
-        <input type="number" id="twoPMAtvLastYear" step="0.01" placeholder="0.00" required>
+        <label for="2PMAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="2PMAtvLastYear" step="0.01" placeholder="0.00" required>
 
-        <label for="twoPMMultisTY">Multis TY:</label>
-        <input type="number" id="twoPMMultisTY" step="0.01" placeholder="0.00" required>
+        <label for="2PMMultisTY">Multis TY:</label>
+        <input type="number" id="2PMMultisTY" step="0.01" placeholder="0.00" required>
 
         <button type="submit">Generate Report</button>
     </form>
 
-    <form class="form-container" id="sixPMForm">
+    <form class="form-container" id="6PMForm">
         <div class="custom-dropdown">
-            <label for="sixPMStore">Store:</label>
-            <input type="text" id="sixPMStore" placeholder="Enter store" required>
-            <ul id="sixPMStoreDropdown" class="dropdown-menu">
+            <label for="6PMStore">Store:</label>
+            <input type="text" id="6PMStore" placeholder="Enter store" required>
+            <ul id="6PMStoreDropdown" class="dropdown-menu">
                 <li>ONE UTAMA 7930</li>
                 <li>MID VALLEY 7963</li>
                 <li>SUNWAY 7979</li>
@@ -110,26 +110,26 @@
             </ul>
         </div>
 
-        <label for="sixPMTodaySales">Today's Sales (RM):</label>
-        <input type="number" id="sixPMTodaySales" step="0.01" placeholder="0.00" required>
+        <label for="6PMTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="6PMTodaySales" step="0.01" placeholder="0.00" required>
 
-        <label for="sixPMLastYearSales">Last Year Sales (RM):</label>
-        <input type="number" id="sixPMLastYearSales" step="0.01" placeholder="0.00" required>
+        <label for="6PMLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="6PMLastYearSales" step="0.01" placeholder="0.00" required>
 
-        <label for="sixPMLastWeekSales">Last Week Sales (RM):</label>
-        <input type="number" id="sixPMLastWeekSales" step="0.01" placeholder="0.00" required>
+        <label for="6PMLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="6PMLastWeekSales" step="0.01" placeholder="0.00" required>
 
-        <label for="sixPMAtvToday">ATV Today (RM):</label>
-        <input type="number" id="sixPMAtvToday" step="0.01" placeholder="0.00" required>
+        <label for="6PMAtvToday">ATV Today (RM):</label>
+        <input type="number" id="6PMAtvToday" step="0.01" placeholder="0.00" required>
 
-        <label for="sixPMAtvLastWeek">ATV Last Week (RM):</label>
-        <input type="number" id="sixPMAtvLastWeek" step="0.01" placeholder="0.00" required>
+        <label for="6PMAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="6PMAtvLastWeek" step="0.01" placeholder="0.00" required>
 
-        <label for="sixPMAtvLastYear">ATV Last Year (RM):</label>
-        <input type="number" id="sixPMAtvLastYear" step="0.01" placeholder="0.00" required>
+        <label for="6PMAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="6PMAtvLastYear" step="0.01" placeholder="0.00" required>
 
-        <label for="sixPMMultisTY">Multis TY:</label>
-        <input type="number" id="sixPMMultisTY" step="0.01" placeholder="0.00" required>
+        <label for="6PMMultisTY">Multis TY:</label>
+        <input type="number" id="6PMMultisTY" step="0.01" placeholder="0.00" required>
 
         <button type="submit">Generate Report</button>
     </form>
