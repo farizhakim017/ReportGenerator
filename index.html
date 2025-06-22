@@ -13,6 +13,7 @@
     <div class="report-options">
         <button class="report-option inactive" id="eodButton">EOD Report</button>
         <button class="report-option inactive" id="2PMButton">2 PM Report</button>
+        <button class="report-option inactive" id="4PMButton">4 PM Report</button>
         <button class="report-option inactive" id="6PMButton">6 PM Report</button>
     </div>
 
@@ -98,6 +99,43 @@
         <button type="submit">Generate Report</button>
     </form>
 
+    <form class="form-container" id="4PMForm">
+        <div class="custom-dropdown">
+            <label for="4PMStore">Store:</label>
+            <input type="text" id="4PMStore" placeholder="Enter store" required>
+            <ul id="4PMStoreDropdown" class="dropdown-menu">
+                <li>ONE UTAMA 7930</li>
+                <li>MID VALLEY 7963</li>
+                <li>SUNWAY 7979</li>
+                <li>PAVILION 7111</li>
+            </ul>
+        </div>
+        
+
+        <label for="4PMTodaySales">Today's Sales (RM):</label>
+        <input type="number" id="4PMTodaySales" step="0.01" placeholder="0.00" required>
+
+        <label for="4PMLastYearSales">Last Year Sales (RM):</label>
+        <input type="number" id="4PMLastYearSales" step="0.01" placeholder="0.00" required>
+
+        <label for="4PMLastWeekSales">Last Week Sales (RM):</label>
+        <input type="number" id="4PMLastWeekSales" step="0.01" placeholder="0.00" required>
+
+        <label for="4PMAtvToday">ATV Today (RM):</label>
+        <input type="number" id="4PMAtvToday" step="0.01" placeholder="0.00" required>
+
+        <label for="4PMAtvLastWeek">ATV Last Week (RM):</label>
+        <input type="number" id="4PMAtvLastWeek" step="0.01" placeholder="0.00" required>
+
+        <label for="4PMAtvLastYear">ATV Last Year (RM):</label>
+        <input type="number" id="4PMAtvLastYear" step="0.01" placeholder="0.00" required>
+
+        <label for="4PMMultisTY">Multis TY:</label>
+        <input type="number" id="4PMMultisTY" step="0.01" placeholder="0.00" required>
+
+        <button type="submit">Generate Report</button>
+    </form>
+
     <form class="form-container" id="6PMForm">
         <div class="custom-dropdown">
             <label for="6PMStore">Store:</label>
@@ -132,7 +170,7 @@
         <input type="number" id="6PMMultisTY" step="0.01" placeholder="0.00" required>
 
         <button type="submit">Generate Report</button>
-    </form>
+    </form> 
 
     <div class="result" id="result"></div>
     <button id="copyButton">Copy to Clipboard</button>

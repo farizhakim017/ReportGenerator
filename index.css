@@ -6,44 +6,53 @@
         }
 
         h1 {
-            font-family: 'Caveat', cursive; 
+            font-family: 'Caveat', cursive;
             text-align: center;
             color: #ee1e3b;
         }
 
         .report-options {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    justify-content: center; /* Center the whole grid */
+    max-width: 400px;
+    margin: 0 auto 20px auto;
+}
+
+
 
         .report-option {
-            background-color: #ee1e3b; 
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            font-weight: bold; 
-            border: 2px solid transparent; /* Default border */
-        }
+    width: 100%; /* Add this line */
+    background-color: #ee1e3b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    font-weight: bold;
+    border: 2px solid transparent;
+}
+
 
         .report-option:hover {
             transform: scale(1.05);
         }
 
         .active {
-            background-color: #ee1e3b; 
+            background-color: #ee1e3b;
             color: white;
             transform: scale(1.05);
         }
 
         .inactive {
-            background-color: rgba(238, 30, 59, 0.3); /* Faded grey */
-            border: 2px solid #ccc; /* Thicker border for inactive */
-            color: rgba(255, 255, 255, 0.7); /* Faded white */
+            background-color: rgba(238, 30, 59, 0.3);
+            /* Faded grey */
+            border: 2px solid #ccc;
+            /* Thicker border for inactive */
+            color: rgba(255, 255, 255, 0.7);
+            /* Faded white */
         }
 
         .form-container {
@@ -72,8 +81,10 @@
         }
 
         button {
-            background-color: black; /* Black background */
-            color: white; /* White font */
+            background-color: black;
+            /* Black background */
+            color: white;
+            /* White font */
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
@@ -83,12 +94,13 @@
         }
 
         button:hover {
-            background-color: #333; /* Darker black on hover */
+            background-color: #333;
+            /* Darker black on hover */
         }
 
         .result {
             margin-top: 20px;
-            white-space: pre-wrap; 
+            white-space: pre-wrap;
         }
 
         #copyButton {
@@ -100,13 +112,13 @@
             position: relative;
             width: 100%;
         }
-    
+
         .custom-dropdown input {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
         }
-    
+
         .dropdown-menu {
             position: absolute;
             width: 90%;
@@ -117,13 +129,19 @@
             overflow-y: auto;
             z-index: 10;
         }
-    
+
         .dropdown-menu li {
             list-style: none;
             padding: 8px;
             cursor: pointer;
         }
-    
+
         .dropdown-menu li:hover {
             background: #f0f0f0;
         }
+
+        @media (max-width: 400px) {
+    .report-options {
+        grid-template-columns: 1fr;
+    }
+}

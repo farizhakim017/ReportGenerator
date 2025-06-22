@@ -108,7 +108,7 @@ Multis : ${multisTY}
 
 // 🔹 Attach event listeners to forms dynamically
 document.addEventListener("DOMContentLoaded", function () {
-    ["eod", "2PM", "6PM"].forEach(type => {
+    ["eod", "2PM", "4PM", "6PM"].forEach(type => {
         let form = document.getElementById(`${type}Form`);
         if (form) {
             form.onsubmit = function (event) {
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // 🔹 Toggle forms when buttons are clicked
-["eod", "2PM", "6PM"].forEach(type => {
+["eod", "2PM", "4PM", "6PM"].forEach(type => {
     let button = document.getElementById(`${type}Button`);
     if (button) {
         button.onclick = function () {
@@ -222,5 +222,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setupDropdown("eodStore", "storeDropdown");
     setupDropdown("2PMStore", "2PMStoreDropdown");
-    setupDropdown("6PMStore", "6PMStoreDropdown");
+    setupDropdown("6PMStore", "6PMStoreDropdown"); 
+    setupDropdown("4PMStore", "4PMStoreDropdown");
 });
